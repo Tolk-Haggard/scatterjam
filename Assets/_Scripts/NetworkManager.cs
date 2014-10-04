@@ -20,7 +20,7 @@ public class NetworkManager : MonoBehaviour {
 			PhotonNetwork.offlineMode = true;
 			OnJoinedLobby();
 		} else {
-				PhotonNetwork.ConnectUsingSettings ("ScatterJam Springs and Fences V001");	
+				PhotonNetwork.ConnectUsingSettings ("ScatterJam Springs and Fences V002");	
 		}
 	}
 
@@ -46,14 +46,14 @@ public class NetworkManager : MonoBehaviour {
 			return;
 		}
 
-		SpawnSpot mySpawnSpot = spawnSpots [Random.Range (0, spawnSpots.Length)];
-
-		GameObject myPlayerGO = (GameObject)PhotonNetwork.Instantiate ("PlayerController", mySpawnSpot.transform.position, mySpawnSpot.transform.rotation, 0);
+		SpawnSpot mySpawnSpot = spawnSpots[ Random.Range (0, spawnSpots.Length) ];
+		GameObject myPlayerGO = (GameObject)PhotonNetwork.Instantiate("PlayerController", mySpawnSpot.transform.position, mySpawnSpot.transform.rotation, 0);
 		standbyCamera.SetActive(false);
+		
+		((MonoBehaviour)myPlayerGO.GetComponent("FPSInputController")).enabled = true;
 		((MonoBehaviour)myPlayerGO.GetComponent("MouseLook")).enabled = true;
+		((MonoBehaviour)myPlayerGO.GetComponent("CharacterMotor")).enabled = true;
 		((MonoBehaviour)myPlayerGO.GetComponent("Launch")).enabled = true;
-		//((MonoBehaviour)myPlayerGO.GetComponent("Audio Source")).enabled = true;
-		//((MonoBehaviour)myPlayerGO.GetComponent("FPSInput Controller")).enabled = true;
 		myPlayerGO.transform.FindChild("Main Camera").gameObject.SetActive(true);
 		Destroy(mySpawnSpot);
 	}
