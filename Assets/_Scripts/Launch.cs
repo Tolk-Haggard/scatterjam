@@ -24,7 +24,7 @@ public class Launch : MonoBehaviour {
 			PullBack ();		
 		} 
 
-		if(Input.GetKeyDown (KeyCode.M))
+		if(Input.GetKeyUp (KeyCode.Space))
 		{ 
 			Release();
 		}
@@ -37,9 +37,9 @@ public class Launch : MonoBehaviour {
 	}
 
 	void Release() {
-		SpawnMyBall ();
 		int forceCoeff = currentForceCoeff();
-		launchingBall.rigidbody.AddForce (new Vector3(0,1,1) * forceCoeff);
+		var facing = transform.rotation;
+		SpawnMyBall ().rigidbody.AddForce (transform.forward * forceCoeff);
 		//LaunchingBall.rigidbody.AddForce (new Vector3(0,1,1) * forceCoeff);
 		audio.volume = (float) forceCoeff / (float) MaxForce;
 		audio.Play ();
@@ -58,11 +58,12 @@ public class Launch : MonoBehaviour {
 		return (int)Math.Min(MaxForce, clickLength.TotalMilliseconds * ForceAcceleration);
 	}
 
-	void SpawnMyBall() {
+	GameObject SpawnMyBall() {
 //		Debug.Log ("SpawnMyAmmo");
-
+		Vector3 spawnBallPosition = new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z);
 		//Instantiate(launchingBall);
-		PhotonNetwork.Instantiate("LaunchingBall", transform.position, transform.rotation, 0);
+		return PhotonNetwork.Instantiate("LaunchingBall", spawnBallPosition, transform.rotation, 0);
+		//PhotonNetwork.Instantiate("LaunchingBall", transform.position, transform.rotation, 0);
 
 //		if (spawnAmmoSpots == null) {
 //			Debug.Log(":Issues With SpawnAmmoSpots");
