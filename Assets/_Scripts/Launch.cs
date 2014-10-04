@@ -11,20 +11,22 @@ public class Launch : MonoBehaviour {
 	DateTime clickStart;
 	Boolean pullingBack = false;
 
-	GameObject launchingBall;
+	public GameObject launchingBall;
 
-
+	
 	// Use this for initialization
 	void Start () {
-		launchingBall = GameObject.Find("LaunchingBall");
 	}
 	
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetKeyDown (KeyCode.Space)) 
+		{
 			PullBack ();		
 		} 
+
 		if(Input.GetKeyDown (KeyCode.M))
-			{ Release();
+		{ 
+			Release();
 		}
 	}
 
@@ -35,6 +37,7 @@ public class Launch : MonoBehaviour {
 	}
 
 	void Release() {
+		SpawnMyBall ();
 		int forceCoeff = currentForceCoeff();
 		launchingBall.rigidbody.AddForce (new Vector3(0,1,1) * forceCoeff);
 		//LaunchingBall.rigidbody.AddForce (new Vector3(0,1,1) * forceCoeff);
@@ -55,5 +58,24 @@ public class Launch : MonoBehaviour {
 		return (int)Math.Min(MaxForce, clickLength.TotalMilliseconds * ForceAcceleration);
 	}
 
+	void SpawnMyBall() {
+//		Debug.Log ("SpawnMyAmmo");
 
+		//Instantiate(launchingBall);
+		PhotonNetwork.Instantiate("LaunchingBall", transform.position, transform.rotation, 0);
+
+//		if (spawnAmmoSpots == null) {
+//			Debug.Log(":Issues With SpawnAmmoSpots");
+//			return;
+//		}
+		
+//		SpawnAmmoSpot myAmmoSpawnSpot = spawnAmmoSpots [0];
+//		launchingBall = GameObject.Find("LaunchingBall");
+//		Instantiate(launchingBall, myAmmoSpawnSpot.transform.position, myAmmoSpawnSpot.transform.rotation);
+
+		//SpawnAmmoSpot myAmmoSpawnSpot = spawnAmmoSpots [UnityEngine.Random.Range (0, spawnAmmoSpots.Length)];
+		//PhotonNetwork.Instantiate ("PlayerController", new Vector3(300f, 14f, 0f) ,Quaternion.identity, 0);
+		//GameObject myAmmo = (GameObject)PhotonNetwork.Instantiate ("LaunchingBall", mySpawnSpot.transform.position, mySpawnSpot.transform.rotation, 0);
+		//PhotonNetwork.Instantiate ("LaunchingBall", mySpawnSpot.transform.position, mySpawnSpot.transform.rotation, 0);
+	}
 }

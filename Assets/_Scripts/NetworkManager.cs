@@ -47,16 +47,15 @@ public class NetworkManager : MonoBehaviour {
 		}
 
 		SpawnSpot mySpawnSpot = spawnSpots [Random.Range (0, spawnSpots.Length)];
-		//PhotonNetwork.Instantiate ("PlayerController", new Vector3(300f, 14f, 0f) ,Quaternion.identity, 0);
 
 		GameObject myPlayerGO = (GameObject)PhotonNetwork.Instantiate ("PlayerController", mySpawnSpot.transform.position, mySpawnSpot.transform.rotation, 0);
 		standbyCamera.SetActive(false);
-		//((MonoBehaviour)myPlayerGO.GetComponent("FPSInputController")).enabled = true;
 		((MonoBehaviour)myPlayerGO.GetComponent("MouseLook")).enabled = true;
-		//((MonoBehaviour)myPlayerGO.GetComponent("PlayerMovement")).enabled = true;
-		//((MonoBehaviour)myPlayerGO.GetComponent("CharacterMotor")).enabled = true;
-		//((MonoBehaviour)myPlayerGO.GetComponent("PlayerShooting")).enabled = true;
+		((MonoBehaviour)myPlayerGO.GetComponent("Launch")).enabled = true;
+		//((MonoBehaviour)myPlayerGO.GetComponent("Audio Source")).enabled = true;
+		//((MonoBehaviour)myPlayerGO.GetComponent("FPSInput Controller")).enabled = true;
 		myPlayerGO.transform.FindChild("Main Camera").gameObject.SetActive(true);
+		Destroy(mySpawnSpot);
 	}
 
 
