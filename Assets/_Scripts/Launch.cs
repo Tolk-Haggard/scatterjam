@@ -38,7 +38,7 @@ public class Launch : MonoBehaviour {
 
 	void Release() {
 		int forceCoeff = currentForceCoeff();
-		var facing = transform.rotation;
+		//var facing = transform.rotation;
 		SpawnMyBall ().rigidbody.AddForce (transform.forward * forceCoeff);
 		//LaunchingBall.rigidbody.AddForce (new Vector3(0,1,1) * forceCoeff);
 		audio.volume = (float) forceCoeff / (float) MaxForce;

@@ -11,6 +11,8 @@ public class LaunchingBall : Photon.MonoBehaviour {
 	void Start () 
 	{
 		transform.position = Random.insideUnitSphere * 5;
+		realPosition = Vector3.zero;
+		Quaternion realRotation = Quaternion.identity;
 	}
 
 	// Update is called once per frame
@@ -27,14 +29,14 @@ public class LaunchingBall : Photon.MonoBehaviour {
 	
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
 				if (stream.isWriting) {
-						//This is our player. We need to send our actual position to the network
-						stream.SendNext (transform.position);
-						stream.SendNext (transform.rotation);		
+					//This is our player. We need to send our actual position to the network
+					stream.SendNext (transform.position);
+					stream.SendNext (transform.rotation);		
 				} else {
-						//This is someone else's player.  We need to recieve their position (as of a few 
-						//milliseconds ago) and update our version of that player.
-						realPosition = (Vector3)stream.ReceiveNext ();
-						realRotation = (Quaternion)stream.ReceiveNext ();
+					//This is someone else's player.  We need to recieve their position (as of a few 
+					//milliseconds ago) and update our version of that player.
+					realPosition = (Vector3)stream.ReceiveNext ();
+					realRotation = (Quaternion)stream.ReceiveNext ();
 				}
 		
 		}
